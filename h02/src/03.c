@@ -30,7 +30,7 @@ void fill_triangle_arr(int ar[SIZE][SIZE]){
                 ar[i][j] = 0;
             else
                 ar[i][j] = 1;
-            count -= 1; // отсчитываем колво поставленных нулей
+            count --; // отсчитываем колво поставленных нулей
 
         }
     }
