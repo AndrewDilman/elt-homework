@@ -16,7 +16,7 @@ void replace_third_byte(int* number, int* replace){
     int32_t n_buf = *number;
     int32_t r_buf = *replace;
 
-    r_buf = r_buf << (4*2); // смещаем число на 3 байт
+    r_buf = r_buf << (8*2); // смещаем число на 3 байт
     n_buf = n_buf & 0xFFFFF0FF; // маска убирающая 3 байт
     n_buf = n_buf | r_buf; // Совмещаем два числа
     *number = n_buf;
@@ -56,9 +56,9 @@ int main()
     printf("Enter number to replace third byte: \n");
     if( !read_number(&replace) )
         return 0;
-    if(replace > 15){
-        printf("Maximum is 15\n");
-        replace = 15;
+    if(replace > 255){
+        printf("Maximum is 255\n");
+        replace = 255;
     }
     
     replace_third_byte(&number, &replace);
