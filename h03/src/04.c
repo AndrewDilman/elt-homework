@@ -3,22 +3,19 @@
 #include <string.h>
 #define STR_LEN 256
 
-int read_string(char *string){
-    char buff[STR_LEN];
-    if (fgets(buff, sizeof(buff), stdin)) {
-        if (sscanf(buff, "%s", string) == 0) {
-            printf("can't read string!\n");
-            return 0;
-        }
+int read_string(char *string) {
+    if (fgets(string, STR_LEN, stdin)) {
+        return 1;
+    } else {
+        printf("can't read string!\n");
+        return 0;
     }
-    return 1;
 }
 
 char* Find_pattern(char str[STR_LEN], char pat[STR_LEN]){
     int n = strlen(str);
     int m = strlen(pat);
 
-    printf("%d\n", n);
     // пытаемся найти искомую строку от каждого символа 
     for(int i = 0; i < n; i++){
         int j = 0;
