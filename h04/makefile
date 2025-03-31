@@ -2,10 +2,10 @@
 CC = gcc
 
 # Флаги компиляции
-CFLAGS = -Wall -Wextra
+CFLAGS = -g -O0 -Wall -Wextra
 
 # Имя исполняемого файла
-TARGET = myprogram
+TARGET = main
 
 # Папки
 SRC_DIR = src
@@ -44,3 +44,6 @@ distclean: clean
 
 # Указываем, что цели all, clean и distclean являются фиктивными
 .PHONY: all clean distclean
+
+debug:
+	gdb ./bin/main --command=.gdb
