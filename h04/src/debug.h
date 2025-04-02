@@ -8,5 +8,3 @@ struct abonent; // Нужно для предотвращения редупре
 void print_bits(const void *data, size_t size);
 
 void print_struct_array_bits(struct abonent *array, size_t count);
-
-void print_abonent(struct abonent *ab);

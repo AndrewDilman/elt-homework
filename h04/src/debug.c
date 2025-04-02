@@ -25,9 +25,3 @@ void print_struct_array_bits(struct abonent *array, size_t count) {
         print_bits(&array[i], sizeof(struct abonent));
     }
 }
-
-void print_abonent(struct abonent *ab) {
-    printf("Abonent name: %s\n", ab->name);
-    printf("Abonent second name: %s\n", ab->second_name);
-    printf("Abonent number: %s\n", ab->tel);
-}
