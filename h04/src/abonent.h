@@ -13,4 +13,5 @@ struct abonent {
     char tel[PHONE_LEN];
 };
 
-void run_book();
+void run_book(struct abonent book[BOOK_SIZE]);
+void start_book();

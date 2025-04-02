@@ -4,6 +4,6 @@
 #include "abonent.h"
 
 int main() {
-  run_book();
+  start_book();
   return 0;
 }
