@@ -46,4 +46,4 @@ distclean: clean
 .PHONY: all clean distclean
 
 debug:
-	gdb ./bin/main --command=.gdb
+	gdb ./bin/$(TARGET) --command=.gdb
