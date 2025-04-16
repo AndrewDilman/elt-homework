@@ -1,6 +1,7 @@
 #pragma once
 #include <stdio.h>
 #include <stdint.h>  // Для uint8_t и точного побитового доступа
+#include <stdlib.h>
 #include "abonent.h"
 
 struct Abonent; // Нужно для предотвращения редупреждения у функции print_struct_array_bits

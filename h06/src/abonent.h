@@ -15,5 +15,10 @@ struct Abonent {
     struct Abonent *next;
 };
 
-void run_book(struct Abonent book[BOOK_SIZE]);
+struct Book {
+    struct Abonent *head;
+    struct Abonent *tail;
+};
+
+void run_book(struct Book *book);
 void start_book();
