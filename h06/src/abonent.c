@@ -1,7 +1,7 @@
 #include "abonent.h"
 
 // Принт меню
-void print_menu() {
+void _print_menu() {
   printf("\nPlease enter one of the numbers:\n"
          "1) Add abonent\n"
          "2) Delete abonent\n"
@@ -18,21 +18,21 @@ void _print_abonent(struct Abonent *ab) {
 }
 
 // циклическое считываение введённого номера меню
-int get_menu_number() { // обрабатывает ввод числа для меню
+int _get_menu_number() { // обрабатывает ввод числа для меню
   int num = 0;
   if (read_number(&num)) // ввели не цифру
-    num = get_menu_number();
+    num = _get_menu_number();
 
   if (!(num >= 1 && num <= 5)) { // ввели не ту цифру
     printf("\n");
-    print_menu();
-    num = get_menu_number();
+    _print_menu();
+    num = _get_menu_number();
   }
   return num;
 }
 
 // ручное заполнение абонента
-int fill_abonent(struct Abonent *ab) {
+int _fill_abonent(struct Abonent *ab) {
   printf("Type abonent's first name:\n");
   if (read_string(ab->name)) {
     printf("Can't write abonent first name!\n");
@@ -52,7 +52,7 @@ int fill_abonent(struct Abonent *ab) {
 }
 
 // аннулируем мервый бит имени абонента
-void clear_abonent(struct Abonent *ab) { ab->name[0] = '\0'; }
+void _clear_abonent(struct Abonent *ab) { ab->name[0] = '\0'; }
 
 // Выделем память и создаём абонента
 struct Abonent *_create_abonent() {
@@ -65,7 +65,7 @@ struct Abonent *_create_abonent() {
 }
 
 // Добавление абонента в книгу
-int add_abonent(struct Book *book) {
+int _add_abonent(struct Book *book) {
   struct Abonent *ab = _create_abonent();
   if (ab == NULL) {
     printf("Can't create abonent! \n");
@@ -74,7 +74,7 @@ int add_abonent(struct Book *book) {
   ab->next = NULL;
   ab->prev = NULL;
 
-  if (fill_abonent(ab)) {
+  if (_fill_abonent(ab)) {
     printf("Can't create abonent! \n");
     free(ab);
     return 1;
@@ -109,7 +109,7 @@ struct Abonent *_find_abonent(const char name[NAME_LEN],
 }
 
 // обёртка для поиска
-int search_for_abonent(struct Abonent book[BOOK_SIZE]) {
+int _search_for_abonent(struct Abonent book[BOOK_SIZE]) {
   printf("Enter name of searched abonent:\n");
   char name[NAME_LEN];
   if (read_string(name)) {
@@ -129,7 +129,7 @@ int search_for_abonent(struct Abonent book[BOOK_SIZE]) {
 }
 
 // обёртка для удаления
-int delete_abonent(struct Abonent book[BOOK_SIZE]) {
+int _delete_abonent(struct Abonent book[BOOK_SIZE]) {
   printf("Enter name of abonent to delete:\n");
   char name[NAME_LEN];
   if (read_string(name)) {
@@ -143,13 +143,13 @@ int delete_abonent(struct Abonent book[BOOK_SIZE]) {
     return 1;
   }
 
-  clear_abonent(ab);
+  _clear_abonent(ab);
   printf("Abonent deleted!\n");
   return 0;
 }
 
 // вывод всех ненулевых абонентов
-void print_all_abonents(struct Book *book) {
+void _print_all_abonents(struct Book *book) {
   if (book->tail == NULL) {
     printf("Book is empty\n");
     return;
@@ -165,23 +165,23 @@ void print_all_abonents(struct Book *book) {
 }
 
 // цикличный вызов работы с книгой
-void run_book(struct Book *book) {
+void _run_book(struct Book *book) {
   while (1) {
-    print_menu();
-    int num = get_menu_number();
+    _print_menu();
+    int num = _get_menu_number();
     printf("\n");
     switch (num) {
     case 1:
       _create_abonent(book);
       break;
     case 2:
-      delete_abonent(book);
+      _delete_abonent(book);
       break;
     case 3:
-      search_for_abonent(book);
+      _search_for_abonent(book);
       break;
     case 4:
-      print_all_abonents(book);
+      _print_all_abonents(book);
       break;
     case 5:
       return;
@@ -196,9 +196,9 @@ void start_book() {
   // зануление структуры
   struct Book book = {NULL, NULL};
   // run_book(book);
-  add_abonent(&book);
-  add_abonent(&book);
-  add_abonent(&book);
+  _add_abonent(&book);
+  _add_abonent(&book);
+  _add_abonent(&book);
 
-  print_all_abonents(&book);
+  _print_all_abonents(&book);
 }
