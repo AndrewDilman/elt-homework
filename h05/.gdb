@@ -3,14 +3,10 @@ list IsPassOk
 
 b main.c: 21
 r
+# Смотрим на инструкции main
+disassemble main
+# подхожит 0x00005555555551eb <+66>:    lea    0xe30(%rip),%rax        # 0x555555556022
+
 # узнаём размер переменной
 print sizeof Pass
 
-# Берём текущй дар функции
-info frame
-# saved rip = 0x5555555551c9 - адрес возврата
-# 0x5555555551eb - if
-
-b main.c: 23
-c
-info frame
