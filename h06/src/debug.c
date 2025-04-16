@@ -19,9 +19,9 @@ void print_bits(const void *data, size_t size) {
     printf("\n");
 }
 
-void print_struct_array_bits(struct abonent *array, size_t count) {
+void print_struct_array_bits(struct Abonent *array, size_t count) {
     for (size_t i = 0; i < count; i++) {
         printf("\n--- Struct %zu ---\n", i);
-        print_bits(&array[i], sizeof(struct abonent));
+        print_bits(&array[i], sizeof(struct Abonent));
     }
 }

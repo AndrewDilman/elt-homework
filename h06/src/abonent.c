@@ -11,7 +11,7 @@ void print_menu() {
 }
 
 // вывод инфы об абоненте
-void print_abonent(struct abonent *ab) {
+void _print_abonent(struct Abonent *ab) {
   printf("\nAbonent name: %s\n", ab->name);
   printf("Abonent second name: %s\n", ab->second_name);
   printf("Abonent number: %s\n", ab->tel);
@@ -32,7 +32,7 @@ int get_menu_number() { // обрабатывает ввод числа для �
 }
 
 // ручное заполнение абонента
-int fill_abonent(struct abonent *ab) {
+int fill_abonent(struct Abonent *ab) {
   printf("Type abonent's first name:\n");
   if (read_string(ab->name)) {
     printf("Can't write abonent first name!\n");
@@ -52,10 +52,10 @@ int fill_abonent(struct abonent *ab) {
 }
 
 // аннулируем мервый бит имени абонента
-void clear_abonent(struct abonent *ab) { ab->name[0] = '\0'; }
+void clear_abonent(struct Abonent *ab) { ab->name[0] = '\0'; }
 
 // заполнение первого абонента с нулевым именем
-struct abonent *create_abonent(struct abonent book[BOOK_SIZE]) {
+struct Abonent *create_abonent(struct Abonent book[BOOK_SIZE]) {
   for (int i = 0; i < BOOK_SIZE; i++) {
     if (book[i].name[0] == '\0') {
       if (fill_abonent(&book[i]) != 0) {
@@ -69,8 +69,8 @@ struct abonent *create_abonent(struct abonent book[BOOK_SIZE]) {
 }
 
 // поиск абонента
-struct abonent *find_abonent(const char name[NAME_LEN],
-                             struct abonent book[BOOK_SIZE]) {
+struct Abonent *_find_abonent(const char name[NAME_LEN],
+                             struct Abonent book[BOOK_SIZE]) {
   for (int i = 0; i < BOOK_SIZE; i++) {
     if (!strcmp(book[i].name, name)) {
       return &book[i]; // Правмльно ли вот так возвращать указатель для
@@ -81,7 +81,7 @@ struct abonent *find_abonent(const char name[NAME_LEN],
 }
 
 // обёртка для поиска
-int search_for_abonent(struct abonent book[BOOK_SIZE]) {
+int search_for_abonent(struct Abonent book[BOOK_SIZE]) {
   printf("Enter name of searched abonent:\n");
   char name[NAME_LEN];
   if (read_string(name)) {
@@ -89,19 +89,19 @@ int search_for_abonent(struct abonent book[BOOK_SIZE]) {
     return 1;
   }
 
-  struct abonent *ab = find_abonent(name, book);
+  struct Abonent *ab = _find_abonent(name, book);
   if (ab == NULL) {
     printf("Can't find abonent!\n");
     return 1;
   }
 
   printf("Abonent found!\n");
-  print_abonent(ab);
+  _print_abonent(ab);
   return 0;
 }
 
 // обёртка для удаления
-int delete_abonent(struct abonent book[BOOK_SIZE]) {
+int delete_abonent(struct Abonent book[BOOK_SIZE]) {
   printf("Enter name of abonent to delete:\n");
   char name[NAME_LEN];
   if (read_string(name)) {
@@ -109,7 +109,7 @@ int delete_abonent(struct abonent book[BOOK_SIZE]) {
     return 1;
   }
 
-  struct abonent *ab = find_abonent(name, book);
+  struct Abonent *ab = _find_abonent(name, book);
   if (ab == NULL) {
     printf("Can't find abonent!\n");
     return 1;
@@ -121,11 +121,11 @@ int delete_abonent(struct abonent book[BOOK_SIZE]) {
 }
 
 // вывод всех ненулевых абонентов
-void print_all_abonents(struct abonent book[BOOK_SIZE]) {
+void print_all_abonents(struct Abonent book[BOOK_SIZE]) {
   int abonent_counter = 0;
   for (int i = 0; i < BOOK_SIZE; i++) {
     if (book[i].name[0] != '\0') {
-      print_abonent(&book[i]);
+      _print_abonent(&book[i]);
       abonent_counter++;
     }
   }
@@ -136,7 +136,7 @@ void print_all_abonents(struct abonent book[BOOK_SIZE]) {
 }
 
 // цикличный вызов работы с книгой
-void run_book(struct abonent book[BOOK_SIZE]) {
+void run_book(struct Abonent book[BOOK_SIZE]) {
   while (1) {
     print_menu();
     int num = get_menu_number();
@@ -165,6 +165,6 @@ void run_book(struct abonent book[BOOK_SIZE]) {
 // Функция старта
 void start_book() {
   // зануление выделенной памяти
-  struct abonent book[BOOK_SIZE] = {0};
+  struct Abonent book[BOOK_SIZE] = {0};
   run_book(book);
 }
