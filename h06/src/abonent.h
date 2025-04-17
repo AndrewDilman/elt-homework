@@ -20,5 +20,17 @@ struct Book {
     struct Abonent *tail;
 };
 
-void run_book(struct Book *book);
+void _print_menu();
+void _print_abonent(struct Abonent *ab);
+int _get_menu_number();
+int _fill_abonent(struct Abonent *ab);
+void _clear_abonent(struct Abonent *ab, struct Book *book);
+struct Abonent *_create_abonent();
+int _add_abonent(struct Book *book);
+struct Abonent *_find_abonent(const char name[NAME_LEN], struct Book *book);
+int _search_for_abonent(struct Book *book);
+int _delete_abonent(struct Book *book);
+void _print_all_abonents(struct Book *book);
+void _shut_down(struct Book *book);
+void _run_book(struct Book *book);
 void start_book();
