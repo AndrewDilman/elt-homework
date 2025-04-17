@@ -52,7 +52,20 @@ int _fill_abonent(struct Abonent *ab) {
 }
 
 // аннулируем мервый бит имени абонента
-void _clear_abonent(struct Abonent *ab) { ab->name[0] = '\0'; }
+void _clear_abonent(struct Abonent *ab, struct Book *book) {
+  // Скрепляем предыдущий и следующий элементы
+  if (ab->prev != NULL)
+    ab->prev->next = ab->next;
+  if (ab->next != NULL)
+    ab->next->prev = ab->prev;
+
+  // если элементы в самой книге
+  if (book->head == ab)
+    book->head = ab->prev;
+
+  if (book->tail == ab)
+    book->tail = ab->next;
+}
 
 // Выделем память и создаём абонента
 struct Abonent *_create_abonent() {
@@ -97,19 +110,18 @@ int _add_abonent(struct Book *book) {
 }
 
 // поиск абонента
-struct Abonent *_find_abonent(const char name[NAME_LEN],
-                              struct Abonent book[BOOK_SIZE]) {
-  for (int i = 0; i < BOOK_SIZE; i++) {
-    if (!strcmp(book[i].name, name)) {
-      return &book[i]; // Правмльно ли вот так возвращать указатель для
-                       // дальнейшей аботы?
-    }
+struct Abonent *_find_abonent(const char name[NAME_LEN], struct Book *book) {
+  struct Abonent *ab = book->tail;
+  while (ab != NULL) {
+    if (!strcmp(ab->name, name))
+      return ab;
+    ab = ab->next;
   }
   return NULL;
 }
 
 // обёртка для поиска
-int _search_for_abonent(struct Abonent book[BOOK_SIZE]) {
+int _search_for_abonent(struct Book *book) {
   printf("Enter name of searched abonent:\n");
   char name[NAME_LEN];
   if (read_string(name)) {
@@ -129,7 +141,7 @@ int _search_for_abonent(struct Abonent book[BOOK_SIZE]) {
 }
 
 // обёртка для удаления
-int _delete_abonent(struct Abonent book[BOOK_SIZE]) {
+int _delete_abonent(struct Book *book) {
   printf("Enter name of abonent to delete:\n");
   char name[NAME_LEN];
   if (read_string(name)) {
@@ -143,7 +155,7 @@ int _delete_abonent(struct Abonent book[BOOK_SIZE]) {
     return 1;
   }
 
-  _clear_abonent(ab);
+  _clear_abonent(ab, book);
   printf("Abonent deleted!\n");
   return 0;
 }
@@ -156,12 +168,22 @@ void _print_all_abonents(struct Book *book) {
   }
 
   struct Abonent *ab = book->tail;
-  while(ab != NULL){
+  while (ab != NULL) {
     _print_abonent(ab);
     ab = ab->next;
   }
 
   return;
+}
+
+void _shut_down(struct Book *book) {
+  struct Abonent *ab = book->tail;
+  while (ab != NULL) {
+    struct Abonent *ab_next = ab->next;
+    free(ab);
+    ab = ab_next;
+  }
+  // Книгу не надо удалять, тк эта память не выделяеться маллоком
 }
 
 // цикличный вызов работы с книгой
@@ -172,7 +194,7 @@ void _run_book(struct Book *book) {
     printf("\n");
     switch (num) {
     case 1:
-      _create_abonent(book);
+      _add_abonent(book);
       break;
     case 2:
       _delete_abonent(book);
@@ -184,6 +206,7 @@ void _run_book(struct Book *book) {
       _print_all_abonents(book);
       break;
     case 5:
+      _shut_down(book);
       return;
     default:
       break;
@@ -195,10 +218,5 @@ void _run_book(struct Book *book) {
 void start_book() {
   // зануление структуры
   struct Book book = {NULL, NULL};
-  // run_book(book);
-  _add_abonent(&book);
-  _add_abonent(&book);
-  _add_abonent(&book);
-
-  _print_all_abonents(&book);
+  _run_book(&book);
 }
