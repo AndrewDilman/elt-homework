@@ -2,7 +2,7 @@
 #include "./libcalc/calc.h"
 #include "./libread/read.h"
 
-void _print_menu() {
+void print_menu() {
   printf("\nPlease enter one of the numbers:\n"
          "1) Add two numbers\n"
          "2) Subtract two numbers\n"
@@ -11,19 +11,20 @@ void _print_menu() {
          "5) Exit\n");
 }
 
-int _get_menu_number() { // обрабатывает ввод числа для меню
+int get_menu_number() { // обрабатывает ввод числа для меню
   int num = 0;
   if (read_int(&num)) // ввели не цифру
-    num = _get_menu_number();
+    num = get_menu_number();
 
   if (!(num >= 1 && num <= 5)) { // ввели не ту цифру
     printf("\n");
-    _print_menu();
-    num = _get_menu_number();
+    print_menu();
+    num = get_menu_number();
   }
   return num;
 }
 
+// записывает два числа с которыми будем работать
 int read_numbers(float *v1, float *v2) {
   if (read_float(v1)) {
     printf("Stop getting numbers\n");
@@ -38,12 +39,13 @@ int read_numbers(float *v1, float *v2) {
 
 void run_calc() {
   while (1) {
-    _print_menu();
+    print_menu();
 
     float v1 = 0, v2 = 0; // числа с которыми будем работать
 
-    int num = _get_menu_number();
+    int num = get_menu_number();
     printf("\n");
+
     switch (num) {
     case 1:
       printf("Ttpe two numbers to add\n");
