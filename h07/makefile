@@ -41,6 +41,9 @@ all: $(TARGET_PATH)
 # Сборка исполняемого файла
 $(TARGET_PATH): $(MAIN_OBJ) $(LIBCALC_PATH) $(LIBREAD_PATH)
 	@mkdir -p $(BIN_DIR)
+# здесь компилируем всю программу,
+# привязывая библиотеки и укащывая где их искать через -L
+# и указывая имена через -l
 	$(CC) $(MAIN_OBJ) -L$(LIBCALC_OBJ_DIR) -L$(LIBREAD_OBJ_DIR) -lcalc  -lread -o $@
 
 # Сборка статической библиотеки калькулятора
@@ -56,12 +59,12 @@ $(MAIN_OBJ): $(MAIN_SRC)
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Компиляция модулей библиотеки
+# Компиляция модулей библиотеки калькулятора
 $(LIBCALC_OBJ_DIR)/%.o: $(LIBCALC_SRC_DIR)/%.c
 	@mkdir -p $(LIBCALC_OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Компиляция модулей библиотеки
+# Компиляция модулей библиотеки ввода
 $(LIBREAD_OBJ_DIR)/%.o: $(LIBREAD_SRC_DIR)/%.c
 	@mkdir -p $(LIBREAD_OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@

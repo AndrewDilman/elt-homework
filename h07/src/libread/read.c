@@ -18,7 +18,19 @@ int read_string(char *str) {
   }
   return 0;
 }
-int read_number(float *number) {
+
+int read_int(int *number) {
+  char buff[STR_LEN];
+  if (fgets(buff, sizeof(buff), stdin)) {
+    if (sscanf(buff, "%d", number) == 0) {
+      printf("can't read number!\n");
+      return 1;
+    }
+  }
+  return 0;
+}
+
+int read_float(float *number) {
   char buff[STR_LEN];
   if (fgets(buff, sizeof(buff), stdin)) {
     if (sscanf(buff, "%f", number) == 0) {
