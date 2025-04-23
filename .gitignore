@@ -6,4 +6,5 @@
 !makefile
 
 *.[oad]
+*.so
 .vscode
