@@ -14,7 +14,7 @@ int main()
     int f_dis = open("filename", O_RDWR | O_CREAT, 0644);
 
     if(f_dis == -1){
-        printf("Error while file creting! %s\n", strerror(errno));
+        printf("Error while file creating! %s\n", strerror(errno));
         return 1;
     }
     
